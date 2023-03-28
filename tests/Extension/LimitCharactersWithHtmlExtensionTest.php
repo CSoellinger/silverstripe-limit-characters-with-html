@@ -62,7 +62,7 @@ class LimitCharactersWithHtmlExtensionTest extends SapphireTest
     public function testLongerThan(
         string $htmlText,
         int $truncateLength,
-        mixed $add,
+        $add,
         string $expectedExact,
         string $expectedWordExact,
         bool $longerThan

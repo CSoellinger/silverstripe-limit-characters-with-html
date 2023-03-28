@@ -1,0 +1,9 @@
+---
+Name: module-limit-html-characters
+---
+SilverStripe\ORM\FieldType\DBHTMLText:
+  extensions:
+    - Csoellinger\SilverStripe\LimitCharactersWithHtml\LimitCharactersWithHtmlExtension
+SilverStripe\ORM\FieldType\DBHTMLVarchar:
+  extensions:
+    - Csoellinger\SilverStripe\LimitCharactersWithHtml\LimitCharactersWithHtmlExtension

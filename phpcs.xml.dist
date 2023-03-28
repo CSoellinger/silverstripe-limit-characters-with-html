@@ -2,10 +2,31 @@
 <ruleset name="SilverStripe">
     <description>CodeSniffer ruleset for SilverStripe coding conventions.</description>
 
-    <!-- base rules are PSR-12 -->
-    <rule ref="PSR12" >
-        <!-- Current exclusions -->
-        <!--<exclude name="PSR1.Files.SideEffects.FoundWithSymbols" />-->
-        <!--<exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" />-->
+    <!-- included files -->
+    <file>src</file>
+    <file>tests</file>
+
+    <!-- Set base path -->
+    <arg name="basepath" value="."/>
+    <!-- Use cache -->
+    <arg name="cache" />
+    <!-- Print colors -->
+    <arg name="colors" />
+    <!-- Parallel tasks -->
+    <arg name="parallel" value="75" />
+    <!-- Show progress of the run -->
+    <arg value="p" />
+    <!-- Show sniff codes in all reports -->
+    <arg value="s" />
+
+    <rule ref="PSR12">
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" />
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="140" />
+            <property name="absoluteLineLimit" value="180" />
+        </properties>
     </rule>
 </ruleset>

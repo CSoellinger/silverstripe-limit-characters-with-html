@@ -1,4 +1,8 @@
-node_modules
-/vendor/
 .DS_Store
-
+.phpunit.result.cache
+composer.lock
+/assets/
+/coverage/
+/resources/
+/vendor/
+node_modules

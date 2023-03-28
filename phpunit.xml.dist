@@ -1,13 +1,20 @@
-<phpunit bootstrap="vendor/silverstripe/cms/tests/bootstrap.php" colors="true">
-    <testsuite name="silverstripe-module/skeleton">
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    bootstrap="vendor/silverstripe/framework/tests/bootstrap.php" colors="true" testdox="true"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+    <coverage includeUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src/</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">tests/</directory>
+        </exclude>
+        <report>
+            <text outputFile="php://stdout" />
+            <html outputDirectory="./coverage/html" />
+        </report>
+    </coverage>
+    <testsuite name="csoellinger/silverstripe-limit-characters-with-html">
         <directory>tests/</directory>
     </testsuite>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/</directory>
-            <exclude>
-                <directory suffix=".php">tests/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
 </phpunit>

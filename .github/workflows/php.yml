@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version:
+        php-versions:
           - "7.4"
           - "8.0"
           - "8.1"

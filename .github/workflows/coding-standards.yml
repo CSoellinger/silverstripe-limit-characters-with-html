@@ -72,10 +72,16 @@ jobs:
             .cache/phpcs-tests.json
           key: ${{ runner.os }}-date-${{ steps.get-date.outputs.date }}-phpcs-cache-${{ hashFiles('**/composer.json', 'phpcs.xml.dist') }}
 
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
       # Since Composer dependencies are installed using `composer update` and no lock file is in version control,
       # passing a custom cache suffix ensures that the cache is flushed at least once per week.
       - name: Install Composer dependencies
-        uses: ramsey/composer-install@2 # v2.2.0
+        uses: ramsey/composer-install@v2 # v2.2.0
         with:
           custom-cache-suffix: ${{ steps.get-date.outputs.date }}
 

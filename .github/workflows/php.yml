@@ -24,35 +24,35 @@ jobs:
 
     name: PHP ${{ matrix.php-versions }} Test
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-versions }}
-        coverage: none
-        tools: phpunit:9.5
-      # env:
-      #   COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: none
+          tools: phpunit:9.5
+        # env:
+        #   COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Check PHP Version
-      run: php -v
+      - name: Get last Monday's date
+        id: get-date
+        run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> $GITHUB_OUTPUT
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
+      - name: Check PHP Version
+        run: php -v
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
 
-    - name: Install dependencies
-      run: composer install --optimize-autoloader --prefer-dist --no-progress
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v2 # v2.2.0
+        with:
+          custom-cache-suffix: ${{ steps.get-date.outputs.date }}
 
-    - name: Run test suite
-      run: composer run-script test
+      # - name: Install dependencies
+      #   run: composer install --optimize-autoloader --prefer-dist --no-progress
+
+      - name: Run test suite
+        run: composer run-script test

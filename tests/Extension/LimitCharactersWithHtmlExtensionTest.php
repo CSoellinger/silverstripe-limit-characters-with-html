@@ -34,7 +34,7 @@ class LimitCharactersWithHtmlExtensionTest extends SapphireTest
     /**
      * @dataProvider htmlTextProvider
      */
-    public function testLimitCharactersWithHtml(string $htmlText, int $truncateLength, mixed $add, string $expectedExact)
+    public function testLimitCharactersWithHtml(string $htmlText, int $truncateLength, $add, string $expectedExact)
     {
         $dbField = DBHTMLText::create('TestField')->setValue($htmlText);
 
@@ -47,7 +47,7 @@ class LimitCharactersWithHtmlExtensionTest extends SapphireTest
     public function testLimitCharactersWithHtmlToClosestWord(
         string $htmlText,
         int $truncateLength,
-        mixed $add,
+        $add,
         string $expectedExact,
         string $expectedWordExact
     ) {

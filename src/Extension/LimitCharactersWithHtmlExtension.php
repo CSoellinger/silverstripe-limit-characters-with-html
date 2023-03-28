@@ -179,11 +179,11 @@ class LimitCharactersWithHtmlExtension extends DataExtension
      * Check if a string is longer than a number of characters. It excludes html
      * by default.
      *
-     * @param mixed $excludeHtml Default is true
+     * @param bool $excludeHtml Default is true
      *
      * @return bool
      */
-    public function LongerThan(int $limit, $excludeHtml = true): bool
+    public function LongerThan(int $limit, bool $excludeHtml = true): bool
     {
         $text = $this->owner->getValue();
 

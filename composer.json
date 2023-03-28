@@ -13,6 +13,7 @@
         "html"
     ],
     "require": {
+        "php": "^7.4 || ^8.0 || ^8.1 || ^8.2",
         "pfaciana/tiny-html-minifier": "^3.0",
         "silverstripe/admin": "^1",
         "silverstripe/framework": "^4"

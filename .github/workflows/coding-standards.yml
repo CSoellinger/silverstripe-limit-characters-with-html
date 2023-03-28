@@ -64,6 +64,9 @@ jobs:
         id: get-date
         run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> $GITHUB_OUTPUT
 
+      - name: "Create cache dir"
+        run: mkdir .cache
+
       - name: Cache PHPCS scan cache
         uses: actions/cache@v3
         with:

@@ -54,7 +54,6 @@ class LimitCharactersWithHtmlExtension extends DataExtension
      */
     public function LimitCharactersWithHtml($limit = 20, $add = false, $exact = true): string
     {
-        $truncate = '';
         $text = $this->owner->getValue();
         // Force cast to bool values
         $exact = (bool) $exact;

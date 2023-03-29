@@ -26,26 +26,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Runs PHP coding standards checks.
-  #
-  # Violations are reported inline with annotations.
-  #
-  # Performs the following steps:
-  # - Checks out the repository.
-  # - Sets up PHP.
-  # - Configures caching for PHPCS scans.
-  # - Installs Composer dependencies.
-  # - Make Composer packages available globally.
-  # - Runs PHPCS on the full codebase with warnings suppressed.
-  # - Generate a report for displaying issues as pull request annotations.
-  # - Runs PHPCS on the `tests` directory without warnings suppressed.
-  # - Generate a report for displaying `test` directory issues as pull request annotations.
-  # - Ensures version-controlled files are not modified or deleted.
   phpcs:
     name: PHP coding standards
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # if: ${{ github.repository == 'WordPress/wordpress-develop' || github.event_name == 'pull_request' }}
+    if: ${{ github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' || github.event_name == 'pull_request' }}
 
     steps:
       - name: Checkout repository
@@ -56,10 +41,8 @@ jobs:
         with:
           php-version: 7.4
           coverage: none
-          tools: phpunit:9.5
+          tools: cs2pr
 
-      # This date is used to ensure that the PHPCS cache is cleared at least once every week.
-      # http://man7.org/linux/man-pages/man1/date.1.html
       - name: "Get last Monday's date"
         id: get-date
         run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> $GITHUB_OUTPUT
@@ -84,7 +67,7 @@ jobs:
       # Since Composer dependencies are installed using `composer update` and no lock file is in version control,
       # passing a custom cache suffix ensures that the cache is flushed at least once per week.
       - name: Install Composer dependencies
-        uses: ramsey/composer-install@v2 # v2.2.0
+        uses: ramsey/composer-install@v2
         with:
           custom-cache-suffix: ${{ steps.get-date.outputs.date }}
 
@@ -116,7 +99,7 @@ jobs:
   #   needs: [ phpcs, jshint, slack-notifications ]
   #   if: |
   #     always() &&
-  #     github.repository == 'WordPress/wordpress-develop' &&
+  #     github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' &&
   #     github.event_name != 'pull_request' &&
   #     github.run_attempt < 2 &&
   #     (

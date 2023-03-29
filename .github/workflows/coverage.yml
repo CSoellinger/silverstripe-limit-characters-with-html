@@ -54,10 +54,16 @@ jobs:
   # - Ensures version-controlled files are not modified or deleted.
   # - Upload the multisite code coverage report to Codecov.io.
   test-coverage-report:
-    name: Coverage report
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
+    name: PHP ${{ matrix.php }} Coverage report
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     if: ${{ github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '8.0' ]
+        os: [ ubuntu-latest ]
 
     steps:
       - name: Checkout

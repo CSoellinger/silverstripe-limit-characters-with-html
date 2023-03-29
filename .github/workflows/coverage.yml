@@ -73,22 +73,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          # coverage: none
-          # tools: phpunit:9.5
-
-      ##
-      # This allows Composer dependencies to be installed using a single step.
-      #
-      # Since the tests are currently run within the Docker containers where the PHP version varies,
-      # the same PHP version needs to be configured for the action runner machine so that the correct
-      # dependency versions are installed and cached.
-      ##
-      - name: Set up PHP
-        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d # v2.24.0
-        with:
-          php-version: '7.4'
-          coverage: none
-
 
       # Since Composer dependencies are installed using `composer update` and no lock file is in version control,
       # passing a custom cache suffix ensures that the cache is flushed at least once per week.
@@ -99,7 +83,6 @@ jobs:
 
       - name: Run test suite
         run: composer run-script test -- --verbose -c phpunit.xml.dist --coverage-clover clover.xml
-
 
       - name: Upload report to Codecov
         uses: codecov/codecov-action@v3

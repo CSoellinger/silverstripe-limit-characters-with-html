@@ -1,0 +1,103 @@
+name: Code Coverage Report
+
+on:
+  # Verify
+  push:
+    branches:
+      - main
+    # paths:
+      # - '.github/workflows/test-coverage.yml'
+      # - 'docker-compose.yml'
+      # - 'phpunit.xml.dist'
+      # - 'tests/phpunit/multisite.xml'
+  pull_request:
+    branches:
+      - main
+    # paths:
+    #   - '.github/workflows/test-coverage.yml'
+    #   - 'docker-compose.yml'
+    #   - 'phpunit.xml.dist'
+    #   - 'tests/phpunit/multisite.xml'
+  # Once daily at 00:00 UTC.
+  # schedule:
+  #   - cron: '0 0 * * *'
+  # # Allow manually triggering the workflow.
+  # workflow_dispatch:
+
+env:
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: ${{ true }}
+  LOCAL_PHP: '7.4-fpm'
+  LOCAL_PHP_XDEBUG: true
+  LOCAL_PHP_XDEBUG_MODE: 'coverage'
+  LOCAL_PHP_MEMCACHED: ${{ false }}
+
+jobs:
+  # Runs the PHPUnit tests for WordPress.
+  #
+  # Performs the following steps:
+  # - Sets environment variables.
+  # - Checks out the repository.
+  # - Sets up Node.js.
+  # - Sets up PHP.
+  # - Installs Composer dependencies.
+  # - Installs npm dependencies
+  # - Logs general debug information about the runner.
+  # - Logs Docker debug information (about the Docker installation within the runner).
+  # - Starts the WordPress Docker container.
+  # - Logs the running Docker containers.
+  # - Logs debug information about what's installed within the WordPress Docker containers.
+  # - Install WordPress within the Docker container.
+  # - Run the PHPUnit tests as a single site.
+  # - Ensures version-controlled files are not modified or deleted.
+  # - Upload the single site code coverage report to Codecov.io.
+  # - Run the PHPUnit tests as a multisite installation.
+  # - Ensures version-controlled files are not modified or deleted.
+  # - Upload the multisite code coverage report to Codecov.io.
+  test-coverage-report:
+    name: Coverage report
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    if: ${{ github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          # coverage: none
+          # tools: phpunit:9.5
+
+      ##
+      # This allows Composer dependencies to be installed using a single step.
+      #
+      # Since the tests are currently run within the Docker containers where the PHP version varies,
+      # the same PHP version needs to be configured for the action runner machine so that the correct
+      # dependency versions are installed and cached.
+      ##
+      - name: Set up PHP
+        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d # v2.24.0
+        with:
+          php-version: '7.4'
+          coverage: none
+
+
+      # Since Composer dependencies are installed using `composer update` and no lock file is in version control,
+      # passing a custom cache suffix ensures that the cache is flushed at least once per week.
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          custom-cache-suffix: $(/bin/date -u --date='last Mon' "+%F")
+
+      - name: Run test suite
+        run: composer run-script test -- --verbose -c phpunit.xml.dist --coverage-clover clover.xml
+
+
+      - name: Upload report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: clover.xml
+          # flags: single,php
+          fail_ci_if_error: true

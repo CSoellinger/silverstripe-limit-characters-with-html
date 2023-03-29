@@ -30,7 +30,7 @@ jobs:
     name: PHP coding standards
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: ${{ github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' || github.event_name == 'pull_request' }}
+    if: ${{ github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' }}
 
     steps:
       - name: Checkout repository

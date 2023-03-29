@@ -9,21 +9,25 @@ on:
 permissions:
   contents: read
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   run:
-    name: PHP ${{ matrix.php-versions }} Test
-    runs-on: ubuntu-latest
+    name: PHP ${{ matrix.php }} Test
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 20
-    if: ${{ github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' || github.event_name == 'pull_request' }}
+    if: ${{ github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' }}
 
     strategy:
       fail-fast: false
       matrix:
-        php-versions:
-          - "7.4"
-          - "8.0"
-          - "8.1"
-          - "8.2"
+        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
+        os: [ ubuntu-latest ]
 
     steps:
       - name: Checkout
@@ -32,24 +36,27 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php }}
           coverage: none
           tools: phpunit:9.5
-
-      - name: Get last Monday's date
-        id: get-date
-        run: echo "date=$(/bin/date -u --date='last Mon' "+%F")" >> $GITHUB_OUTPUT
-
-      - name: Check PHP Version
-        run: php -v
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
+      # Since Composer dependencies are installed using `composer update` and no lock file is in version control,
+      # passing a custom cache suffix ensures that the cache is flushed at least once per week.
       - name: Install Composer dependencies
-        uses: ramsey/composer-install@v2
+        uses: ramsey/composer-install@v2 # v2.2.0
         with:
-          custom-cache-suffix: ${{ steps.get-date.outputs.date }}
+          custom-cache-suffix: $(/bin/date -u --date='last Mon' "+%F")
+
+      # - name: General debug information
+      #   run: |
+      #     curl --version
+      #     git --version
+      #     composer --version
+      #     php --version
+      #     locale -a
 
       - name: Run test suite
         run: composer run-script test

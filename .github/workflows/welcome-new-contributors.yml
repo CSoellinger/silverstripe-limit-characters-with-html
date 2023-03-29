@@ -1,0 +1,21 @@
+name: Welcome New Contributors
+
+on:
+  pull_request_target:
+    types: [ opened ]
+
+jobs:
+  # Comments on a pull request when the author is a new contributor.
+  post-welcome-message:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ github.repository == 'CSoellinger/silverstripe-limit-characters-with-html' }}
+
+    steps:
+      - uses: wow-actions/welcome@v1
+        with:
+          FIRST_PR_COMMENT: >
+            Hi @{{ author }}! 👋
+
+
+            Thank you for your contribution! 💖

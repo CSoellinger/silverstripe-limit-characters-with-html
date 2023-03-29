@@ -12,7 +12,7 @@ This module adds an extension to DBHTMLVarchar and DBHTMLText which enables limi
    1. [public function **LimitCharactersWithHtml(** $limit = 20, $add = false, $exact = true **)**: string](#public-function-limitcharacterswithhtml-limit--20-add--false-exact--true--string)
    2. [public function **LimitCharactersWithHtmlToClosestWord(** int $limit = 20, $add = false **)**: string](#public-function-limitcharacterswithhtmltoclosestword-int-limit--20-add--false--string)
    3. [public function **LongerThan(** int $limit, $excludeHtml = true **)**: bool](#public-function-longerthan-int-limit-excludehtml--true--bool)
-6. [Usage example](#usage-example)
+6. [Usage examples](#usage-examples)
 7. [Maintainers](#maintainers)
 8. [Bugtracker](#bugtracker)
 9. [Development and contribution](#development-and-contribution)
@@ -98,7 +98,7 @@ After installing the module you have three new methods for your db html fields.
  */
 ```
 
-## Usage example
+## Usage examples
 
 ```php
 <?php
@@ -108,12 +108,19 @@ $htmlText = '<b>Hello World</b>';
 // example 1
 DBHTMLText::create('Test')
   ->setValue($htmlText)
-  ->LimitCharactersWithHtml(9) // Output: <b>Hello Wo…</b>
+  ->LimitCharactersWithHtml(9)
+  ->Value() // Output: <b>Hello Wo…</b>
 
 // example 2
 DBHTMLText::create('Test')
   ->setValue($htmlText)
-  ->LimitCharactersWithHtmlToClosestWord(9) // Output: <b>Hello…</b>
+  ->LimitCharactersWithHtmlToClosestWord(9)
+  ->Value() // Output: <b>Hello…</b>
+```
+
+```html
+<p>{$TestField.LimitCharactersWithHtml(9)}</p>
+<p>{$TestField.LimitCharactersWithHtmlToClosestWord(9)}</p>
 ```
 
 ## Maintainers

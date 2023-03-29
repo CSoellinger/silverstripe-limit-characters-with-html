@@ -1,12 +1,20 @@
 inherit: true
 
 build:
-  environment:
-      php: 8.1
   nodes:
     analysis:
+      environment:
+        php:
+          version: 8.1
+      dependencies:
+        override:
+          - composer validate
+          - composer install --no-interaction --verbose --profile --prefer-dist
       tests:
-        override: [php-scrutinizer-run --enable-security-analysis]
+        override: [php-scrutinizer-run]
+
+tools:
+  external_code_coverage: true
 
 checks:
   php:

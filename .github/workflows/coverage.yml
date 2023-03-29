@@ -89,4 +89,5 @@ jobs:
         with:
           file: clover.xml
           # flags: single,php
+          verbose: true
           fail_ci_if_error: true

@@ -35,8 +35,6 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: none
           tools: phpunit:9.5
-        # env:
-        #   COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get last Monday's date
         id: get-date

@@ -3,11 +3,9 @@
 namespace Csoellinger\SilverStripe\LimitCharactersWithHtml\Tests;
 
 use Csoellinger\SilverStripe\LimitCharactersWithHtml\LimitCharactersWithHtmlExtension;
-use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\FieldType\DBHTMLVarchar;
-use SilverStripe\Versioned\Versioned;
 
 class LimitCharactersWithHtmlExtensionTest extends SapphireTest
 {

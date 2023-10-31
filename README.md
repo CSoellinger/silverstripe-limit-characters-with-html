@@ -19,7 +19,7 @@ This module adds an extension to DBHTMLVarchar and DBHTMLText which enables limi
 
 ## Requirements
 
-* SilverStripe ^4
+* Silverstripe ^4 | ^5
 
 ## Installation
 
@@ -136,7 +136,7 @@ If the issue does look like a new bug:
 
 * Create a new issue
 * Describe the steps required to reproduce your issue, and the expected outcome. Unit tests, screenshots and screencasts can help here.
-* Describe your environment as detailed as possible: SilverStripe version, Browser, PHP version, Operating System, any installed SilverStripe modules.
+* Describe your environment as detailed as possible: Silverstripe version, Browser, PHP version, Operating System, any installed Silverstripe modules.
 
 Please report security issues to the module maintainers directly. Please don't file security issues in the bug tracker.
 

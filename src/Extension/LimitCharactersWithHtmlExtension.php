@@ -8,7 +8,7 @@ use SilverStripe\ORM\FieldType\DBHTMLVarchar;
 use Minifier\TinyMinify;
 
 /**
- * A simple SilverStripe extension to limit DBHtmlText and DBHtmlVarChar
+ * A simple Silverstripe extension to limit DBHtmlText and DBHtmlVarChar
  * without loosing html tags. HTML will be minified to ignore white spaces
  * between tags and/or html comments. Options can be set at private static
  * $html_min_options variable or via config file.
@@ -57,7 +57,7 @@ class LimitCharactersWithHtmlExtension extends DataExtension
         $text = $this->owner->getValue();
         // Force cast to bool values
         $exact = (bool) $exact;
-        // If $add is character "0" we define it as false. Needed by SilverStripe cause we could not send false params
+        // If $add is character "0" we define it as false. Needed by Silverstripe cause we could not send false params
         // within templates.
         $add = $add === '0' ? false : $add;
         // Use default ellipsis if not set

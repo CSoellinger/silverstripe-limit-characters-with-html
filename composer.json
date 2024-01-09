@@ -1,6 +1,6 @@
 {
     "name": "csoellinger/silverstripe-limit-characters-with-html",
-    "description": "A simple SilverStripe extension to limit DBHtmlText and DBHtmlVarChar without loosing html tags.",
+    "description": "A simple Silverstripe extension to limit DBHtmlText and DBHtmlVarChar without loosing html tags.",
     "license": "MIT",
     "type": "silverstripe-vendormodule",
     "keywords": [
@@ -15,8 +15,8 @@
     "require": {
         "php": "^7.4 || ^8.0 || ^8.1 || ^8.2",
         "pfaciana/tiny-html-minifier": "^3.0",
-        "silverstripe/admin": "^1",
-        "silverstripe/framework": "^4"
+        "silverstripe/admin": "^1 || ^2",
+        "silverstripe/framework": "^4 || ^5"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
